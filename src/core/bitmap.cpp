@@ -1,0 +1,49 @@
+#include "bitmap.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb_image.h>
+#include <stb_image_write.h>
+
+namespace holt
+{
+    Bitmap::Bitmap(int width, int height, const Color &color)
+        : m_width(width), m_height(height)
+    {
+        m_pixels.resize(m_width * m_height);
+        fill(color);
+    }
+
+    void Bitmap::clear()
+    {
+        fill(Colors::BLACK);
+    }
+
+    void Bitmap::fill(const Color &color)
+    {
+        for (Color &p : m_pixels)
+            p = color;
+    }
+
+    void Bitmap::setPixel(size_t x, size_t y, const Color &color)
+    {
+        setPixel(y * m_width + x, color);
+    }
+
+    void Bitmap::setPixel(size_t i, const Color &color)
+    {
+        m_pixels[i] = color;
+    }
+
+    bool Bitmap::load(const std::string &imgPath)
+    {
+        // TODO bitmap loading
+        return false;
+    }
+
+    bool Bitmap::save(const std::string &outPath)
+    {
+        return stbi_write_png(outPath.c_str(), m_width, m_height, 4, m_pixels.data(), m_width * 4) > 0;
+    }
+
+} // namespace holt

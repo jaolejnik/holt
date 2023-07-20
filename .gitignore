@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Build and output files
+[Bb]uild/
+[Oo]ut/
