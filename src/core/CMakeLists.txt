@@ -6,9 +6,12 @@ target_sources(
         # HEADERS
         [[color.h]]
         [[bitmap.h]]
+        [[camera.h]]
+        [[ray.h]]
     PRIVATE
         # SOURCES
         [[bitmap.cpp]]
+        [[camera.cpp]]
 )
 
 target_include_directories(

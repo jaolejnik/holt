@@ -41,9 +41,9 @@ namespace holt
         return false;
     }
 
-    bool Bitmap::save(const std::string &outPath)
+    bool Bitmap::save(const std::string &outPath) const
     {
-        return stbi_write_png(outPath.c_str(), m_width, m_height, 4, m_pixels.data(), m_width * 4) > 0;
+        return stbi_write_png(outPath.c_str(), m_width, m_height, 3, m_pixels.data(), m_width * 3) > 0;
     }
 
 } // namespace holt
