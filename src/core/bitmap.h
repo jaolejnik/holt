@@ -10,7 +10,7 @@ namespace holt
     class Bitmap
     {
     private:
-        std::vector<Color> m_pixels;
+        std::vector<Pixel> m_pixels;
         size_t m_width;
         size_t m_height;
 

@@ -21,8 +21,8 @@ namespace holt
 
     void Bitmap::fill(const Color &color)
     {
-        for (Color &p : m_pixels)
-            p = color;
+        for (Pixel &p : m_pixels)
+            p = static_cast<Pixel>(color * 255.0f);
     }
 
     void Bitmap::setPixel(size_t x, size_t y, const Color &color)
@@ -32,7 +32,7 @@ namespace holt
 
     void Bitmap::setPixel(size_t i, const Color &color)
     {
-        m_pixels[i] = color;
+        m_pixels[i] = static_cast<Pixel>(color * 255.0f);
     }
 
     bool Bitmap::load(const std::string &imgPath)

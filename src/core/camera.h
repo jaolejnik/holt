@@ -17,5 +17,7 @@ namespace holt
         Camera(glm::vec3 position, const glm::vec3 &origin);
 
         const glm::vec3 rayDirection(const glm::vec2 &point);
+
+        const glm::vec3 position() { return m_position; }
     };
 } // namespace holt
