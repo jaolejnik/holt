@@ -1,53 +1,30 @@
 #include "core/bitmap.h"
 #include "core/camera.h"
 #include "core/ray.h"
+#include "core/hittable.h"
+#include "core/hittableList.h"
+#include "core/sphere.h"
+#include "core/interval.h"
 
 #include <glm/glm.hpp>
-#include <iostream>
-
-bool hitSphere(const glm::vec3 &center, float radius, const holt::Ray &ray)
-{
-    auto oc = ray.origin() - center;
-    auto a = glm::dot(ray.direction(), ray.direction());
-    auto b = 2.0 * glm::dot(oc, ray.direction());
-    auto c = glm::dot(oc, oc) - radius * radius;
-
-    return (b * b - 4.0f * a * c) > 0.0f;
-}
-
-holt::Color rayColor(const holt::Ray &ray)
-{
-    if (hitSphere(glm::vec3(0.0f, 0.0f, 1.0f), 0.5f, ray))
-        return holt::Colors::RED;
-    auto t = 0.5f * (ray.direction().y + 1.0f);
-    auto cf = (1.0f - t) * holt::Color(1.0f) + t * holt::Color(0.3f, 0.5f, 1.0f);
-
-    return glm::sqrt(cf); // gamma correction here?
-}
+#include <memory>
 
 int main()
 {
     const glm::vec3 origin = glm::vec3(0.0f);
-    const glm::vec2 res{1024, 768};
+    const glm::vec2 resolution{1024, 768};
 
-    holt::Camera camera(glm::vec3(0.0f, 0.0f, -1.0f), origin);
-    holt::Bitmap frame(res.x, res.y);
+    holt::Camera camera(
+        glm::vec3(0.0f, 0.0f, 1.0f),
+        origin,
+        resolution);
 
-    for (int y = res.y - 1; y >= 0; y--)
-    {
-        std::cout << "\rScanlines remaining: " << y << ' ' << std::flush;
-        for (int x = 0; x < res.x; x++)
-        {
-            auto p = (2.0f * glm::vec2(x, y) - res) / res.y;
-            holt::Ray ray(camera.position(), camera.rayDirection(p));
-            auto color = rayColor(ray);
+    holt::HittableList world;
+    world.add(std::make_shared<holt::Sphere>(glm::vec3(0.0f, 0.0f, -1.0), 0.5f));
+    world.add(std::make_shared<holt::Sphere>(glm::vec3(0.0f, -100.5f, -1.0), 100.0f));
 
-            frame.setPixel(x, y, color);
-        }
-    }
-    std::cout << "\nDone!\n";
-
-    frame.save("out.png");
+    camera.render(world);
+    camera.saveFrame("out.png");
 
     return 0;
 }

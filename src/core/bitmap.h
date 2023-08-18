@@ -2,6 +2,7 @@
 
 #include "color.h"
 
+#include <glm/vec2.hpp>
 #include <vector>
 #include <string>
 
@@ -15,7 +16,7 @@ namespace holt
         size_t m_height;
 
     public:
-        Bitmap(int width, int height, const Color &color = Colors::BLACK);
+        Bitmap(glm::vec2 resolution, const Color &color = Colors::BLACK);
 
         void clear();
         void fill(const Color &color);
@@ -23,5 +24,9 @@ namespace holt
         void setPixel(size_t i, const Color &color);
         bool load(const std::string &imgPath);
         bool save(const std::string &outPath) const;
+
+        const size_t width() const { return m_width; }
+        const size_t height() const { return m_height; }
+        const glm::vec2 resolution() const { return {m_width, m_height}; }
     };
 } // namespace holt

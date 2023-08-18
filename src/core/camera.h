@@ -1,5 +1,10 @@
 #pragma once
 
+#include "bitmap.h"
+#include "color.h"
+#include "ray.h"
+#include "hittable.h"
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
@@ -12,12 +17,16 @@ namespace holt
         glm::vec3 m_forward;
         glm::vec3 m_right;
         glm::vec3 m_up;
+        Bitmap m_frame;
 
     public:
-        Camera(glm::vec3 position, const glm::vec3 &origin);
+        Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution);
 
-        const glm::vec3 rayDirection(const glm::vec2 &point);
+        const glm::vec3 rayDirection(const glm::vec2 &point) const;
+        const Color rayColor(const Ray &ray, const Hittable &world) const;
+        void render(const Hittable &world);
 
-        const glm::vec3 position() { return m_position; }
+        void saveFrame(const std::string &outPath) const { m_frame.save(outPath); }
+        const glm::vec3 position() const { return m_position; }
     };
 } // namespace holt

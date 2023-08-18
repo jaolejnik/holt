@@ -8,10 +8,16 @@ target_sources(
         [[bitmap.h]]
         [[camera.h]]
         [[ray.h]]
+        [[hittable.h]]
+        [[hittableList.h]]
+        [[interval.h]]
+        [[sphere.h]]
     PRIVATE
         # SOURCES
         [[bitmap.cpp]]
         [[camera.cpp]]
+        [[hittableList.cpp]]
+        [[sphere.cpp]]
 )
 
 target_include_directories(

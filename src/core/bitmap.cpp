@@ -7,8 +7,8 @@
 
 namespace holt
 {
-    Bitmap::Bitmap(int width, int height, const Color &color)
-        : m_width(width), m_height(height)
+    Bitmap::Bitmap(glm::vec2 resolution, const Color &color)
+        : m_width(resolution.x), m_height(resolution.y)
     {
         m_pixels.resize(m_width * m_height);
         fill(color);
