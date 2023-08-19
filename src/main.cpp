@@ -17,7 +17,8 @@ int main()
     holt::Camera camera(
         glm::vec3(0.0f, 0.0f, 1.0f),
         origin,
-        resolution);
+        resolution,
+        3);
 
     holt::HittableList world;
     world.add(std::make_shared<holt::Sphere>(glm::vec3(0.0f, 0.0f, -1.0), 0.5f));

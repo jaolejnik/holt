@@ -4,6 +4,7 @@ target_sources(
     holt_core
     PUBLIC 
         # HEADERS
+        [[utils.h]]
         [[color.h]]
         [[bitmap.h]]
         [[camera.h]]

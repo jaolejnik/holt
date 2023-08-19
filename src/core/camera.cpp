@@ -1,13 +1,14 @@
 #include "camera.h"
 #include "interval.h"
+#include "utils.h"
 
 #include <glm/glm.hpp>
 #include <iostream>
 
 namespace holt
 {
-    Camera::Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution)
-        : m_position(position), m_frame(resolution)
+    Camera::Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution, int samplingRate)
+        : m_position(position), m_frame(resolution), m_samplingRate(samplingRate)
     {
         m_forward = glm::normalize(origin - m_position);
         m_right = glm::normalize(glm::cross(m_forward, glm::vec3(0.0f, 1.0f, 0.0f)));
@@ -34,14 +35,27 @@ namespace holt
 
     void Camera::render(const Hittable &world)
     {
-        for (int y = m_frame.height() - 1; y >= 0; y--)
+        for (int y = m_frame.height() - 1; y >= 0; --y)
         {
             std::cout << "\rScanlines remaining: " << y << ' ' << std::flush;
-            for (int x = 0; x < m_frame.width(); x++)
+            for (int x = 0; x < m_frame.width(); ++x)
             {
-                auto p = (2.0f * glm::vec2(x, y) - m_frame.resolution()) / static_cast<float>(m_frame.height());
-                holt::Ray ray(m_position, rayDirection(p));
-                auto color = rayColor(ray, world);
+                Color color(0.0f);
+                auto pixelCoords = glm::vec2(x, y);
+
+                for (float i = 0.0f; i < m_samplingRate; ++i)
+                {
+                    for (float j = 0.0f; j < m_samplingRate; ++j)
+                    {
+                        auto dv = (glm::vec2(i, j) + randomVec2()) / static_cast<float>(m_samplingRate);
+
+                        auto p = (2.0f * (pixelCoords + dv) - m_frame.resolution()) / static_cast<float>(m_frame.height());
+                        Ray ray(m_position, rayDirection(p));
+                        color += rayColor(ray, world);
+                    }
+                }
+
+                color *= 1.0f / (m_samplingRate * m_samplingRate);
 
                 m_frame.setPixel(x, m_frame.height() - 1 - y, color);
             }

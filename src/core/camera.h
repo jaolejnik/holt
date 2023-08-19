@@ -13,6 +13,7 @@ namespace holt
     class Camera
     {
     private:
+        int m_samplingRate = 3;
         glm::vec3 m_position;
         glm::vec3 m_forward;
         glm::vec3 m_right;
@@ -20,7 +21,7 @@ namespace holt
         Bitmap m_frame;
 
     public:
-        Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution);
+        Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution, int samplingRate);
 
         const glm::vec3 rayDirection(const glm::vec2 &point) const;
         const Color rayColor(const Ray &ray, const Hittable &world) const;
