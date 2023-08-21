@@ -20,11 +20,17 @@ namespace holt
         return point.x * m_right + point.y * m_up + 1.5f * m_forward;
     }
 
-    const Color Camera::rayColor(const holt::Ray &ray, const holt::Hittable &world) const
+    const Color Camera::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
     {
+        if (depth <= 0)
+            return Color(0.0f, 0.0f, 0.0f);
+
         HitRecord hitRecord;
-        if (world.hit(ray, holt::Interval(0.0f, holt::infinity), hitRecord))
-            return 0.5f * (hitRecord.normal + holt::Color(1.0f));
+        if (world.hit(ray, holt::Interval(0.001f, holt::infinity), hitRecord))
+        {
+            auto target = hitRecord.point + randomVec3InHemisphere(hitRecord.normal);
+            return 0.5f * traceRay(Ray(hitRecord.point, target - hitRecord.point), world, depth - 1);
+        }
 
         auto unitDirection = glm::normalize(ray.direction());
         auto a = 0.5f * (unitDirection.y + 1.0f);
@@ -51,11 +57,12 @@ namespace holt
 
                         auto p = (2.0f * (pixelCoords + dv) - m_frame.resolution()) / static_cast<float>(m_frame.height());
                         Ray ray(m_position, rayDirection(p));
-                        color += rayColor(ray, world);
+                        color += traceRay(ray, world, 50);
                     }
                 }
 
                 color *= 1.0f / (m_samplingRate * m_samplingRate);
+                color = glm::sqrt(color);
 
                 m_frame.setPixel(x, m_frame.height() - 1 - y, color);
             }

@@ -1,3 +1,7 @@
+# VS Editors
+.vs 
+.vscode 
+
 # Prerequisites
 *.d
 

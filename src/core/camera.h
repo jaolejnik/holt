@@ -24,7 +24,7 @@ namespace holt
         Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution, int samplingRate);
 
         const glm::vec3 rayDirection(const glm::vec2 &point) const;
-        const Color rayColor(const Ray &ray, const Hittable &world) const;
+        const Color traceRay(const Ray &ray, const Hittable &world, int depth) const;
         void render(const Hittable &world);
 
         void saveFrame(const std::string &outPath) const { m_frame.save(outPath); }
