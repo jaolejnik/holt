@@ -14,6 +14,7 @@ namespace holt
     {
     private:
         int m_samplingRate = 3;
+        int m_maxDepth = 50;
         glm::vec3 m_position;
         glm::vec3 m_forward;
         glm::vec3 m_right;

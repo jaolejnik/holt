@@ -11,10 +11,9 @@ namespace holt
         glm::vec3 m_direction;
 
     public:
+        Ray() {}
         Ray(const glm::vec3 &rayOrigin, const glm::vec3 &rayDirection)
-            : m_origin(rayOrigin), m_direction(rayDirection)
-        {
-        }
+            : m_origin(rayOrigin), m_direction(rayDirection) {}
 
         const glm::vec3 at(float t) const { return m_origin + t * m_direction; }
 

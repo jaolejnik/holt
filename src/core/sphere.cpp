@@ -33,6 +33,7 @@ namespace holt
         hitRecord.point = ray.at(hitRecord.t);
         auto outwardNormal = (hitRecord.point - m_center) / m_radius;
         hitRecord.setFaceNormal(ray, outwardNormal);
+        hitRecord.material = m_material;
 
         return true;
     }

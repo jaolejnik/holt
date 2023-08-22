@@ -13,12 +13,17 @@ target_sources(
         [[hittableList.h]]
         [[interval.h]]
         [[sphere.h]]
+        [[materials/material.h]]
+        [[materials/diffuse.h]]
+        [[materials/metal.h]]
     PRIVATE
         # SOURCES
         [[bitmap.cpp]]
         [[camera.cpp]]
-        [[hittableList.cpp]]
         [[sphere.cpp]]
+        [[utils.cpp]]
+        [[materials/diffuse.cpp]]
+        [[materials/metal.cpp]]
 )
 
 target_include_directories(
@@ -26,12 +31,7 @@ target_include_directories(
 	PUBLIC
 	    "${CMAKE_SOURCE_DIR}/src"
 		"${CMAKE_BINARY_DIR}"
-)
-
-target_include_directories(
-    holt_core
-    PUBLIC 
-        ${Stb_INCLUDE_DIR}
+        "${Stb_INCLUDE_DIR}"
 )
 
 target_link_libraries(

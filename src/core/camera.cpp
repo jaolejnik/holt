@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "interval.h"
 #include "utils.h"
+#include "materials/material.h"
 
 #include <glm/glm.hpp>
 #include <iostream>
@@ -23,13 +24,16 @@ namespace holt
     const Color Camera::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
     {
         if (depth <= 0)
-            return Color(0.0f, 0.0f, 0.0f);
+            return Color(0.0f);
 
         HitRecord hitRecord;
         if (world.hit(ray, holt::Interval(0.001f, holt::infinity), hitRecord))
         {
-            auto target = hitRecord.point + randomVec3InHemisphere(hitRecord.normal);
-            return 0.5f * traceRay(Ray(hitRecord.point, target - hitRecord.point), world, depth - 1);
+            Ray scatteredRay;
+            Color attenuation;
+            if (hitRecord.material->scatter(ray, hitRecord, attenuation, scatteredRay))
+                return attenuation * traceRay(scatteredRay, world, depth - 1);
+            return Color(0.0f);
         }
 
         auto unitDirection = glm::normalize(ray.direction());
@@ -57,7 +61,7 @@ namespace holt
 
                         auto p = (2.0f * (pixelCoords + dv) - m_frame.resolution()) / static_cast<float>(m_frame.height());
                         Ray ray(m_position, rayDirection(p));
-                        color += traceRay(ray, world, 50);
+                        color += traceRay(ray, world, m_maxDepth);
                     }
                 }
 

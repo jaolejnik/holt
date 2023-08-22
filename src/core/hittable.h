@@ -4,9 +4,12 @@
 #include "interval.h"
 
 #include <glm/glm.hpp>
+#include <memory>
 
 namespace holt
 {
+    class Material;
+
     class HitRecord
     {
     public:
@@ -14,6 +17,7 @@ namespace holt
         glm::vec3 normal;
         float t;
         bool frontFace;
+        std::shared_ptr<Material> material;
 
         void setFaceNormal(const Ray &ray, const glm::vec3 &outwardNormal)
         {
