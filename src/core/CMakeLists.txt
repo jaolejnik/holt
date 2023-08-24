@@ -14,8 +14,10 @@ target_sources(
         [[interval.h]]
         [[sphere.h]]
         [[materials/material.h]]
+        [[materials/materials.h]]
         [[materials/diffuse.h]]
         [[materials/metal.h]]
+        [[materials/clear.h]]
     PRIVATE
         # SOURCES
         [[bitmap.cpp]]
@@ -24,6 +26,7 @@ target_sources(
         [[utils.cpp]]
         [[materials/diffuse.cpp]]
         [[materials/metal.cpp]]
+        [[materials/clear.cpp]]
 )
 
 target_include_directories(

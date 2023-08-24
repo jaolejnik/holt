@@ -20,11 +20,11 @@ namespace holt
             return false;
 
         auto sqrtd = glm::sqrt(discriminant);
-        auto rootd = (-halfB - glm::sqrt(discriminant)) / a;
+        auto rootd = (-halfB - sqrtd) / a;
 
         if (!rayT.surrounds(rootd))
         {
-            auto rootd = (-halfB + glm::sqrt(discriminant)) / a;
+            rootd = (-halfB + sqrtd) / a;
             if (!rayT.surrounds(rootd))
                 return false;
         }
