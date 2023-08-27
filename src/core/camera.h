@@ -13,13 +13,13 @@ namespace holt
     class Camera
     {
     private:
-        int m_samplingRate = 3;
-        int m_maxDepth = 50;
-        glm::vec3 m_position;
-        glm::vec3 m_forward;
-        glm::vec3 m_right;
-        glm::vec3 m_up;
-        Bitmap m_frame;
+        int mSamplingRate = 3;
+        int mMaxDepth = 50;
+        glm::vec3 mPosition;
+        glm::vec3 mForward;
+        glm::vec3 mRight;
+        glm::vec3 mUp;
+        Bitmap mFrame;
 
     public:
         Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution, int samplingRate);
@@ -28,7 +28,7 @@ namespace holt
         const Color traceRay(const Ray &ray, const Hittable &world, int depth) const;
         void render(const Hittable &world);
 
-        void saveFrame(const std::string &outPath) const { m_frame.save(outPath); }
-        const glm::vec3 position() const { return m_position; }
+        void saveFrame(const std::string &outPath) const { mFrame.save(outPath); }
+        const glm::vec3 position() const { return mPosition; }
     };
 } // namespace holt

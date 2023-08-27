@@ -9,16 +9,16 @@
 namespace holt
 {
     Camera::Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution, int samplingRate)
-        : m_position(position), m_frame(resolution), m_samplingRate(samplingRate)
+        : mPosition(position), mFrame(resolution), mSamplingRate(samplingRate)
     {
-        m_forward = glm::normalize(origin - m_position);
-        m_right = glm::normalize(glm::cross(m_forward, glm::vec3(0.0f, 1.0f, 0.0f)));
-        m_up = glm::normalize(glm::cross(m_right, m_forward));
+        mForward = glm::normalize(origin - mPosition);
+        mRight = glm::normalize(glm::cross(mForward, glm::vec3(0.0f, 1.0f, 0.0f)));
+        mUp = glm::normalize(glm::cross(mRight, mForward));
     }
 
     const glm::vec3 Camera::rayDirection(const glm::vec2 &point) const
     {
-        return point.x * m_right + point.y * m_up + 1.5f * m_forward;
+        return point.x * mRight + point.y * mUp + 1.5f * mForward;
     }
 
     const Color Camera::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
@@ -45,30 +45,30 @@ namespace holt
 
     void Camera::render(const Hittable &world)
     {
-        for (int y = m_frame.height() - 1; y >= 0; --y)
+        for (int y = mFrame.height() - 1; y >= 0; --y)
         {
             std::cout << "\rScanlines remaining: " << y << ' ' << std::flush;
-            for (int x = 0; x < m_frame.width(); ++x)
+            for (int x = 0; x < mFrame.width(); ++x)
             {
                 Color color(0.0f);
                 auto pixelCoords = glm::vec2(x, y);
 
-                for (float i = 0.0f; i < m_samplingRate; ++i)
+                for (float i = 0.0f; i < mSamplingRate; ++i)
                 {
-                    for (float j = 0.0f; j < m_samplingRate; ++j)
+                    for (float j = 0.0f; j < mSamplingRate; ++j)
                     {
-                        auto dv = (glm::vec2(i, j) + randomVec2()) / static_cast<float>(m_samplingRate);
+                        auto dv = (glm::vec2(i, j) + randomVec2()) / static_cast<float>(mSamplingRate);
 
-                        auto p = (2.0f * (pixelCoords + dv) - m_frame.resolution()) / static_cast<float>(m_frame.height());
-                        Ray ray(m_position, rayDirection(p));
-                        color += traceRay(ray, world, m_maxDepth);
+                        auto p = (2.0f * (pixelCoords + dv) - mFrame.resolution()) / static_cast<float>(mFrame.height());
+                        Ray ray(mPosition, rayDirection(p));
+                        color += traceRay(ray, world, mMaxDepth);
                     }
                 }
 
-                color *= 1.0f / (m_samplingRate * m_samplingRate);
+                color *= 1.0f / (mSamplingRate * mSamplingRate);
                 color = glm::sqrt(color);
 
-                m_frame.setPixel(x, m_frame.height() - 1 - y, color);
+                mFrame.setPixel(x, mFrame.height() - 1 - y, color);
             }
         }
         std::cout << "\nDone!\n";

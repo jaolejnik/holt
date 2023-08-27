@@ -9,9 +9,9 @@
 namespace holt
 {
     Bitmap::Bitmap(glm::vec2 resolution, const Color &color)
-        : m_width(resolution.x), m_height(resolution.y)
+        : mWidth(resolution.x), mHeight(resolution.y)
     {
-        m_pixels.resize(m_width * m_height);
+        mPixels.resize(mWidth * mHeight);
         fill(color);
     }
 
@@ -22,18 +22,18 @@ namespace holt
 
     void Bitmap::fill(const Color &color)
     {
-        for (Pixel &p : m_pixels)
+        for (Pixel &p : mPixels)
             p = static_cast<Pixel>(color * 255.0f);
     }
 
     void Bitmap::setPixel(size_t x, size_t y, const Color &color)
     {
-        setPixel(y * m_width + x, color);
+        setPixel(y * mWidth + x, color);
     }
 
     void Bitmap::setPixel(size_t i, const Color &color)
     {
-        m_pixels[i] = static_cast<Pixel>(color * 255.0f);
+        mPixels[i] = static_cast<Pixel>(color * 255.0f);
     }
 
     bool Bitmap::load(const std::string &imgPath)
@@ -44,7 +44,7 @@ namespace holt
 
     bool Bitmap::save(const std::string &outPath) const
     {
-        return stbi_write_png(outPath.c_str(), m_width, m_height, 3, m_pixels.data(), m_width * 3) > 0;
+        return stbi_write_png(outPath.c_str(), mWidth, mHeight, 3, mPixels.data(), mWidth * 3) > 0;
     }
 
 } // namespace holt

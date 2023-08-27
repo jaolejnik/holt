@@ -11,7 +11,7 @@ namespace holt
             scatterDirection = hitRecord.normal;
 
         scatteredRay = Ray(hitRecord.point, scatterDirection);
-        attenuation = m_albedo;
+        attenuation = mAlbedo;
 
         return true;
     }

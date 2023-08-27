@@ -7,12 +7,12 @@ namespace holt
     class Clear : public Material
     {
     private:
-        float m_refractionIndex;
+        float mRefractionIndex;
 
         static float reflectance(float cosTheta, float refractionRatio);
 
     public:
-        Clear(float refractionIndex) : m_refractionIndex(refractionIndex) {}
+        Clear(float refractionIndex) : mRefractionIndex(refractionIndex) {}
 
         bool scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenuation, Ray &scatteredRay) const override;
     };
