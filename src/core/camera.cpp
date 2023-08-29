@@ -8,17 +8,26 @@
 
 namespace holt
 {
-    Camera::Camera(glm::vec3 position, const glm::vec3 &origin, const glm::vec2 &resolution, int samplingRate)
-        : mPosition(position), mFrame(resolution), mSamplingRate(samplingRate)
+    void Camera::update()
     {
-        mForward = glm::normalize(origin - mPosition);
+        mForward = glm::normalize(mLookAt - mPosition);
         mRight = glm::normalize(glm::cross(mForward, glm::vec3(0.0f, 1.0f, 0.0f)));
         mUp = glm::normalize(glm::cross(mRight, mForward));
+
+        float planeHeight = mFocusDistance * glm::tan(glm::radians(mFOVDegrees) / 2.0f) * 2.0f;
+        float planeWidth = planeHeight * mFrame.aspectRatio();
+        mPlaneParams = glm::vec3(planeWidth, planeHeight, mFocusDistance);
     }
 
-    const glm::vec3 Camera::rayDirection(const glm::vec2 &point) const
+    Ray Camera::getRay(const glm::vec2 &point) const
     {
-        return point.x * mRight + point.y * mUp + 1.5f * mForward;
+        auto defocusJitter = randomVec2InUnitCircle() * mDefocusStrength / mFrame.widthF();
+        auto pointLocal = glm::vec3(point, 1.0f) * mPlaneParams;
+        auto rayOrigin = mPosition + defocusJitter.x * mRight + defocusJitter.y * mUp;
+        auto rayTarget = mPosition + pointLocal.x * mRight + pointLocal.y * mUp + pointLocal.z * mForward;
+        auto rayDirection = rayTarget - rayOrigin;
+
+        return Ray(rayOrigin, rayDirection);
     }
 
     const Color Camera::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
@@ -59,8 +68,9 @@ namespace holt
                     {
                         auto dv = (glm::vec2(i, j) + randomVec2()) / static_cast<float>(mSamplingRate);
 
-                        auto p = (2.0f * (pixelCoords + dv) - mFrame.resolution()) / static_cast<float>(mFrame.height());
-                        Ray ray(mPosition, rayDirection(p));
+                        // auto p = (2.0f * (pixelCoords + dv) - mFrame.resolution()) / mFrame.heightF();
+                        auto p = (pixelCoords + dv) / mFrame.resolution() - 0.5f;
+                        Ray ray = getRay(p);
                         color += traceRay(ray, world, mMaxDepth);
                     }
                 }

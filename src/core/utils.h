@@ -16,6 +16,8 @@ namespace holt
 
     glm::vec2 randomVec2Range(float min, float max);
 
+    glm::vec2 randomVec2InUnitCircle();
+
     glm::vec3 randomVec3();
 
     glm::vec3 randomVec3Range(float min, float max);

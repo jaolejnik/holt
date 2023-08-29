@@ -26,6 +26,13 @@ namespace holt
             randomRange(min, max)};
     }
 
+    glm::vec2 randomVec2InUnitCircle()
+    {
+        float theta = 2.0f * glm::pi<float>() * random();
+        auto p = glm::vec2(glm::cos(theta), glm::sin(theta));
+        return p + glm::sqrt(random());
+    }
+
     glm::vec3 randomVec3()
     {
         return {random(), random(), random()};

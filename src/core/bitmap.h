@@ -27,6 +27,9 @@ namespace holt
 
         const size_t width() const { return mWidth; }
         const size_t height() const { return mHeight; }
+        const float widthF() const { return static_cast<float>(mWidth); }
+        const float heightF() const { return static_cast<float>(mHeight); }
+        const float aspectRatio() const { return static_cast<float>(mWidth) / static_cast<float>(mHeight); }
         const glm::vec2 resolution() const { return {mWidth, mHeight}; }
     };
 } // namespace holt
