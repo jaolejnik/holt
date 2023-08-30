@@ -19,7 +19,7 @@ glm::vec2 randomVec2Range(float min, float max) { return {randomRange(min, max),
 glm::vec2 randomVec2InUnitCircle()
 {
     float theta = 2.0f * glm::pi<float>() * random();
-    auto p = glm::vec2(glm::cos(theta), glm::sin(theta));
+    auto p      = glm::vec2(glm::cos(theta), glm::sin(theta));
     return p + glm::sqrt(random());
 }
 
@@ -35,7 +35,8 @@ glm::vec3 randomVec3InUnitSphere()
     while (true)
     {
         auto p = randomVec3Range(-1.0f, 1.0f);
-        if (glm::length2(p) >= 1.0f) continue;
+        if (glm::length2(p) >= 1.0f)
+            continue;
         return p;
     }
 }

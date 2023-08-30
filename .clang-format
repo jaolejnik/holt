@@ -1,11 +1,10 @@
 ﻿---
 BasedOnStyle: Microsoft
+AlignConsecutiveAssignments: 'true'
 AllowAllArgumentsOnNextLine: 'true'
 AllowAllConstructorInitializersOnNextLine: 'true'
 AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: WithoutElse
 AllowShortLambdasOnASingleLine: All
-AllowShortLoopsOnASingleLine: 'false'
 Language: Cpp
 NamespaceIndentation: Inner
 FixNamespaceComments: true

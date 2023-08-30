@@ -24,15 +24,15 @@ class HittableList : public Hittable
     bool hit(const Ray &ray, Interval rayT, HitRecord &hitRecord) const override
     {
         HitRecord tmpHitRecord;
-        bool anyHit = false;
+        bool anyHit   = false;
         auto closestT = rayT.max;
 
         for (const auto &object : objects)
         {
             if (object->hit(ray, Interval(rayT.min, closestT), tmpHitRecord))
             {
-                anyHit = true;
-                closestT = tmpHitRecord.t;
+                anyHit    = true;
+                closestT  = tmpHitRecord.t;
                 hitRecord = tmpHitRecord;
             }
         }

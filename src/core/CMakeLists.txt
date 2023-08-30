@@ -8,6 +8,7 @@ target_sources(
         [[color.h]]
         [[bitmap.h]]
         [[camera.h]]
+        [[renderer.h]]
         [[ray.h]]
         [[hittable.h]]
         [[hittableList.h]]
@@ -23,6 +24,7 @@ target_sources(
         # SOURCES
         [[bitmap.cpp]]
         [[camera.cpp]]
+        [[renderer.cpp]]
         [[sphere.cpp]]
         [[utils.cpp]]
         [[materials/diffuse.cpp]]
