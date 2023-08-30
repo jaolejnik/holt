@@ -18,6 +18,7 @@ target_sources(
         [[materials/diffuse.h]]
         [[materials/metal.h]]
         [[materials/clear.h]]
+        [[materials/diffuseLight.h]]
     PRIVATE
         # SOURCES
         [[bitmap.cpp]]
@@ -27,6 +28,7 @@ target_sources(
         [[materials/diffuse.cpp]]
         [[materials/metal.cpp]]
         [[materials/clear.cpp]]
+        [[materials/diffuseLight.cpp]]
 )
 
 target_include_directories(

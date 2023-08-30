@@ -36,20 +36,16 @@ namespace holt
             return Color(0.0f);
 
         HitRecord hitRecord;
-        if (world.hit(ray, holt::Interval(0.001f, holt::infinity), hitRecord))
-        {
-            Ray scatteredRay;
-            Color attenuation;
-            if (hitRecord.material->scatter(ray, hitRecord, attenuation, scatteredRay))
-                return attenuation * traceRay(scatteredRay, world, depth - 1);
-            return Color(0.0f);
-        }
+        if (!world.hit(ray, holt::Interval(0.001f, holt::infinity), hitRecord))
+            return mBackground;
 
-        auto unitDirection = glm::normalize(ray.direction());
-        auto a = 0.5f * (unitDirection.y + 1.0f);
-        auto cf = (1.0f - a) * holt::Color(1.0f) + a * holt::Color(0.3f, 0.5f, 1.0f);
+        Ray scatteredRay;
+        Color attenuation;
+        Color emmittedLight = hitRecord.material->emit();
+        if (!hitRecord.material->scatter(ray, hitRecord, attenuation, scatteredRay))
+            return emmittedLight;
 
-        return cf;
+        return emmittedLight + attenuation * traceRay(scatteredRay, world, depth - 1);
     }
 
     void Camera::render(const Hittable &world)
@@ -76,6 +72,7 @@ namespace holt
                 }
 
                 color *= 1.0f / (mSamplingRate * mSamplingRate);
+                color = glm::clamp(color, 0.0f, 1.0f);
                 color = glm::sqrt(color);
 
                 mFrame.setPixel(x, mFrame.height() - 1 - y, color);

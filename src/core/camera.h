@@ -27,6 +27,7 @@ namespace holt
         glm::vec3 mUp;
         glm::vec3 mPlaneParams;
 
+        Color mBackground = Color(0.0f);
         Bitmap mFrame;
 
     public:
