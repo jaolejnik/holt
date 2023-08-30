@@ -28,7 +28,6 @@ target_sources(
         [[materials/diffuse.cpp]]
         [[materials/metal.cpp]]
         [[materials/clear.cpp]]
-        [[materials/diffuseLight.cpp]]
 )
 
 target_include_directories(

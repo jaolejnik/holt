@@ -1,0 +1,13 @@
+﻿---
+BasedOnStyle: Microsoft
+AllowAllArgumentsOnNextLine: 'true'
+AllowAllConstructorInitializersOnNextLine: 'true'
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: 'true'
+Language: Cpp
+NamespaceIndentation: Inner
+FixNamespaceComments: true
+
+...

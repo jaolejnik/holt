@@ -1,15 +1,13 @@
 #include "core/camera.h"
 #include "core/hittableList.h"
-#include "core/sphere.h"
 #include "core/materials/materials.h"
+#include "core/sphere.h"
 
 #include <glm/glm.hpp>
 #include <memory>
 
 int main()
 {
-
-    // auto ground = std::make_shared<holt::Diffuse>(holt::Color(0.4f, 0.25f, 0.53f));
     auto ground = std::make_shared<holt::Diffuse>(holt::Color(0.5f, 0.5f, 0.5f));
     auto sun = std::make_shared<holt::DiffuseLight>(holt::Color(0.6f, 0.6f, 0.8f), 2.0f);
     auto lightBlue = std::make_shared<holt::DiffuseLight>(holt::Color(0.4f, 0.8f, 0.4f), 10.0f);

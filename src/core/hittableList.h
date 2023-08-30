@@ -8,35 +8,37 @@
 
 namespace holt
 {
-    class HittableList : public Hittable
+
+class HittableList : public Hittable
+{
+  private:
+    std::vector<std::shared_ptr<Hittable>> mObjects;
+
+  public:
+    HittableList() {}
+    HittableList(std::shared_ptr<Hittable> object) { add(object); }
+
+    void add(std::shared_ptr<Hittable> object) { mObjects.push_back(object); }
+    void clear() { mObjects.clear(); }
+
+    bool hit(const Ray &ray, Interval rayT, HitRecord &hitRecord) const override
     {
-    private:
-        std::vector<std::shared_ptr<Hittable>> mObjects;
+        HitRecord tmpHitRecord;
+        bool anyHit = false;
+        auto closestT = rayT.max;
 
-    public:
-        HittableList() {}
-        HittableList(std::shared_ptr<Hittable> object) { add(object); }
-
-        void add(std::shared_ptr<Hittable> object) { mObjects.push_back(object); }
-        void clear() { mObjects.clear(); }
-
-        bool hit(const Ray &ray, Interval rayT, HitRecord &hitRecord) const override
+        for (const auto &object : mObjects)
         {
-            HitRecord tmpHitRecord;
-            bool anyHit = false;
-            auto closestT = rayT.max;
-
-            for (const auto &object : mObjects)
+            if (object->hit(ray, Interval(rayT.min, closestT), tmpHitRecord))
             {
-                if (object->hit(ray, Interval(rayT.min, closestT), tmpHitRecord))
-                {
-                    anyHit = true;
-                    closestT = tmpHitRecord.t;
-                    hitRecord = tmpHitRecord;
-                }
+                anyHit = true;
+                closestT = tmpHitRecord.t;
+                hitRecord = tmpHitRecord;
             }
-
-            return anyHit;
         }
-    };
+
+        return anyHit;
+    }
+};
+
 } // namespace holt

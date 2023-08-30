@@ -4,16 +4,18 @@
 
 namespace holt
 {
-    class Clear : public Material
-    {
-    private:
-        float mRefractionIndex;
 
-        static float reflectance(float cosTheta, float refractionRatio);
+class Clear : public Material
+{
+  private:
+    float mRefractionIndex;
 
-    public:
-        Clear(float refractionIndex) : mRefractionIndex(refractionIndex) {}
+    static float reflectance(float cosTheta, float refractionRatio);
 
-        bool scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenuation, Ray &scatteredRay) const override;
-    };
-}
+  public:
+    Clear(float refractionIndex) : mRefractionIndex(refractionIndex) {}
+
+    bool scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenuation, Ray &scatteredRay) const override;
+};
+
+} // namespace holt

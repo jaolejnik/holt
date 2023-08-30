@@ -1,6 +1,6 @@
 #pragma once
 
-#include "diffuse.h"
-#include "metal.h"
 #include "clear.h"
+#include "diffuse.h"
 #include "diffuseLight.h"
+#include "metal.h"
