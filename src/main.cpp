@@ -29,11 +29,11 @@ int main()
     world.add(std::make_shared<holt::Sphere>(glm::vec3(1.0f, 0.0f, -1.0f), 0.5f, silver));
 
     holt::Camera camera({1024, 768});
-    camera.setPosition(glm::vec3(-1.0f, 1.5f, 2.0f));
-    camera.setLookAt(glm::vec3(0.0f, 0.0f, -1.0f));
-    camera.setFOV(40.0f);
-    camera.setFocusDistance(3.4f);
-    camera.setDefocusStrength(25.0f);
+    camera.position = glm::vec3(-1.0f, 1.5f, 2.0f);
+    camera.lookAt = glm::vec3(0.0f, 0.0f, -1.0f);
+    camera.FOVDegrees = 40.0f;
+    camera.focusDistance = 3.4f;
+    camera.defocusStrength = 25.0f;
 
     camera.update();
     camera.render(world);

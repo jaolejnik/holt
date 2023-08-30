@@ -12,7 +12,7 @@ bool Clear::scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenua
     attenuation = Color(1.0f);
     float refractionRatio = hitRecord.frontFace ? 1.0f / mRefractionIndex : mRefractionIndex;
 
-    auto unitDirection = glm::normalize(inRay.direction());
+    auto unitDirection = glm::normalize(inRay.direction);
     float cosTheta = glm::min(glm::dot(-unitDirection, hitRecord.normal), 1.0f);
     float sinTheta = glm::sqrt(1.0f - cosTheta * cosTheta);
 

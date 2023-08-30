@@ -5,7 +5,7 @@ AllowAllConstructorInitializersOnNextLine: 'true'
 AllowShortFunctionsOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AllowShortLambdasOnASingleLine: All
-AllowShortLoopsOnASingleLine: 'true'
+AllowShortLoopsOnASingleLine: 'false'
 Language: Cpp
 NamespaceIndentation: Inner
 FixNamespaceComments: true

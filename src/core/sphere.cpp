@@ -7,14 +7,14 @@ namespace holt
 
 bool Sphere::hit(const Ray &ray, Interval rayT, HitRecord &hitRecord) const
 {
-    auto rd = ray.direction();
-    auto oc = ray.origin() - mCenter;
+    auto rd = ray.direction;
+    auto oc = ray.origin - center;
     auto rdLen = glm::length(rd);
     auto ocLen = glm::length(oc);
 
     auto a = rdLen * rdLen;
     auto halfB = glm::dot(oc, rd);
-    auto c = ocLen * ocLen - mRadius * mRadius;
+    auto c = ocLen * ocLen - radius * radius;
     auto discriminant = halfB * halfB - a * c;
 
     if (discriminant < 0.0f) return false;
@@ -30,9 +30,9 @@ bool Sphere::hit(const Ray &ray, Interval rayT, HitRecord &hitRecord) const
 
     hitRecord.t = rootd;
     hitRecord.point = ray.at(hitRecord.t);
-    auto outwardNormal = (hitRecord.point - mCenter) / mRadius;
+    auto outwardNormal = (hitRecord.point - center) / radius;
     hitRecord.setFaceNormal(ray, outwardNormal);
-    hitRecord.material = mMaterial;
+    hitRecord.material = material;
 
     return true;
 }

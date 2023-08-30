@@ -10,14 +10,13 @@ namespace holt
 
 class Sphere : public Hittable
 {
-  private:
-    glm::vec3 mCenter;
-    float mRadius;
-    std::shared_ptr<Material> mMaterial;
-
   public:
+    glm::vec3 center;
+    float radius;
+    std::shared_ptr<Material> material;
+
     Sphere(glm::vec3 center, float radius, std::shared_ptr<Material> material)
-        : mCenter(center), mRadius(radius), mMaterial(material)
+        : center(center), radius(radius), material(material)
     {
     }
 

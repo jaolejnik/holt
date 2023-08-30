@@ -22,7 +22,7 @@ class HitRecord
 
     void setFaceNormal(const Ray &ray, const glm::vec3 &outwardNormal)
     {
-        frontFace = glm::dot(ray.direction(), outwardNormal) < 0.0f;
+        frontFace = glm::dot(ray.direction, outwardNormal) < 0.0f;
         normal = frontFace ? outwardNormal : -outwardNormal;
     }
 };

@@ -13,42 +13,34 @@ namespace holt
 
 class Camera
 {
+  public:
+    int samplingRate = 3;
+    int maxDepth = 10;
+
+    float FOVDegrees = 90.0f;
+    float focusDistance = 1.0f;
+    float defocusStrength = 0.0f;
+
+    glm::vec3 lookAt = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 position = glm::vec3(0.0f, 0.0f, 1.0f);
+
   private:
-    int mSamplingRate = 3;
-    int mMaxDepth = 10;
+    glm::vec3 forward;
+    glm::vec3 right;
+    glm::vec3 up;
+    glm::vec3 clipPlaneParams;
 
-    float mFOVDegrees = 90.0f;
-    float mFocusDistance = 1.0f;
-    float mDefocusStrength = 0.0f;
-
-    glm::vec3 mLookAt = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 mPosition = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 mForward;
-    glm::vec3 mRight;
-    glm::vec3 mUp;
-    glm::vec3 mPlaneParams;
-
-    Color mBackground = Color(0.0f);
-    Bitmap mFrame;
+    Color background = Color(0.0f);
+    Bitmap frame;
 
   public:
-    Camera(const glm::vec2 &resolution) : mFrame(resolution) {}
+    Camera(const glm::vec2 &resolution) : frame(resolution) {}
 
     void update();
     Ray getRay(const glm::vec2 &point) const;
     const Color traceRay(const Ray &ray, const Hittable &world, int depth) const;
     void render(const Hittable &world);
-    void saveFrame(const std::string &outPath) const { mFrame.save(outPath); }
-
-    void setSamplingRate(int samplingRate) { mSamplingRate = samplingRate; }
-    void setMaxDepth(int maxDepth) { mMaxDepth = maxDepth; }
-    void setFOV(float FOVDegrees) { mFOVDegrees = FOVDegrees; }
-    void setFocusDistance(float focusDistance) { mFocusDistance = focusDistance; }
-    void setDefocusStrength(float defocusStrength) { mDefocusStrength = defocusStrength; }
-    void setLookAt(glm::vec3 lookAt) { mLookAt = lookAt; }
-    void setPosition(glm::vec3 position) { mPosition = position; }
-
-    // TODO getters?
+    void saveFrame(const std::string &outPath) const { frame.save(outPath); }
 };
 
 } // namespace holt

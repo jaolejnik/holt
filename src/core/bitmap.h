@@ -11,10 +11,12 @@ namespace holt
 
 class Bitmap
 {
+  public:
+    const size_t width;
+    const size_t height;
+
   private:
-    std::vector<Pixel> mPixels;
-    size_t mWidth;
-    size_t mHeight;
+    std::vector<Pixel> pixels;
 
   public:
     Bitmap(glm::vec2 resolution, const Color &color = Colors::BLACK);
@@ -26,12 +28,10 @@ class Bitmap
     bool load(const std::string &imgPath);
     bool save(const std::string &outPath) const;
 
-    const size_t width() const { return mWidth; }
-    const size_t height() const { return mHeight; }
-    const float widthF() const { return static_cast<float>(mWidth); }
-    const float heightF() const { return static_cast<float>(mHeight); }
-    const float aspectRatio() const { return static_cast<float>(mWidth) / static_cast<float>(mHeight); }
-    const glm::vec2 resolution() const { return {mWidth, mHeight}; }
+    const float widthF() const { return static_cast<float>(width); }
+    const float heightF() const { return static_cast<float>(height); }
+    const float aspectRatio() const { return static_cast<float>(width) / static_cast<float>(height); }
+    const glm::vec2 resolution() const { return {width, height}; }
 };
 
 } // namespace holt

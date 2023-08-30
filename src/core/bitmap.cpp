@@ -9,9 +9,9 @@
 namespace holt
 {
 
-Bitmap::Bitmap(glm::vec2 resolution, const Color &color) : mWidth(resolution.x), mHeight(resolution.y)
+Bitmap::Bitmap(glm::vec2 resolution, const Color &color) : width(resolution.x), height(resolution.y)
 {
-    mPixels.resize(mWidth * mHeight);
+    pixels.resize(width * height);
     fill(color);
 }
 
@@ -19,12 +19,13 @@ void Bitmap::clear() { fill(Colors::BLACK); }
 
 void Bitmap::fill(const Color &color)
 {
-    for (Pixel &p : mPixels) p = static_cast<Pixel>(color * 255.0f);
+    for (Pixel &p : pixels)
+        p = static_cast<Pixel>(color * 255.0f);
 }
 
-void Bitmap::setPixel(size_t x, size_t y, const Color &color) { setPixel(y * mWidth + x, color); }
+void Bitmap::setPixel(size_t x, size_t y, const Color &color) { setPixel(y * width + x, color); }
 
-void Bitmap::setPixel(size_t i, const Color &color) { mPixels[i] = static_cast<Pixel>(color * 255.0f); }
+void Bitmap::setPixel(size_t i, const Color &color) { pixels[i] = static_cast<Pixel>(color * 255.0f); }
 
 bool Bitmap::load(const std::string &imgPath)
 {
@@ -34,7 +35,7 @@ bool Bitmap::load(const std::string &imgPath)
 
 bool Bitmap::save(const std::string &outPath) const
 {
-    return stbi_write_png(outPath.c_str(), mWidth, mHeight, 3, mPixels.data(), mWidth * 3) > 0;
+    return stbi_write_png(outPath.c_str(), width, height, 3, pixels.data(), width * 3) > 0;
 }
 
 } // namespace holt
