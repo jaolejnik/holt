@@ -18,7 +18,7 @@ class Renderer
     int maxDepth     = 10;
 
   private:
-    Color background = Color(0.0f);
+    Color background = Colors::BLACK;
     Bitmap frame;
 
   public:
