@@ -1,5 +1,9 @@
 #include "utils.h"
 
+#include <glm/gtx/norm.hpp>
+#include <random>
+#include <tuple>
+
 namespace holt
 {
 
@@ -53,6 +57,27 @@ bool isAlmostZero(const glm::vec3 &v)
 {
     auto s = 1e-8;
     return glm::all(glm::lessThan(glm::abs(v), glm::vec3(s)));
+}
+
+std::tuple<int, int> divide(int dividend, int divisor) { return {dividend / divisor, dividend % divisor}; }
+
+std::string formatTime(long long timeMs)
+{
+    int ms = 0, s = 0, min = 0;
+
+    std::tie(s, ms) = divide(timeMs, 1000);
+    auto msStr      = std::to_string(ms) + "ms";
+    if (s == 0)
+        return msStr;
+
+    std::tie(min, s) = divide(s, 60);
+    auto sStr        = std::to_string(s) + "s";
+    if (min == 0)
+        return sStr + " " + msStr;
+
+    auto minStr = std::to_string(min) + "min";
+
+    return minStr + " " + sStr + " " + msStr;
 }
 
 } // namespace holt

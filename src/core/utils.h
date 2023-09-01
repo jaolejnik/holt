@@ -1,9 +1,8 @@
 #pragma once
 
-#include <glm/gtx/norm.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-#include <random>
+#include <string>
 
 namespace holt
 {
@@ -29,5 +28,9 @@ glm::vec3 randomUnitVec3();
 glm::vec3 randomVec3InHemisphere(const glm::vec3 &normal);
 
 bool isAlmostZero(const glm::vec3 &v);
+
+std::tuple<int, int> divide(int dividend, int divisor);
+
+std::string formatTime(long long timeMs);
 
 } // namespace holt

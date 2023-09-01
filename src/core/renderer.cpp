@@ -4,10 +4,17 @@
 #include "materials/material.h"
 #include "utils.h"
 
+#include <chrono>
 #include <iostream>
+
+using std::chrono::duration_cast;
+using std::chrono::high_resolution_clock;
+using std::chrono::milliseconds;
+using std::chrono::seconds;
 
 namespace holt
 {
+
 const Color Renderer::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
 {
     if (depth <= 0)
@@ -28,6 +35,8 @@ const Color Renderer::traceRay(const holt::Ray &ray, const holt::Hittable &world
 
 void Renderer::render(const Camera &camera, const Hittable &world)
 {
+    auto start = high_resolution_clock::now();
+
     for (int y = frame.height - 1; y >= 0; --y)
     {
         std::cout << "\rScanlines remaining: " << y << ' ' << std::flush;
@@ -55,7 +64,9 @@ void Renderer::render(const Camera &camera, const Hittable &world)
             frame.setPixel(x, frame.height - 1 - y, color);
         }
     }
-    std::cout << "\nDone!\n";
+    auto stop        = high_resolution_clock::now();
+    auto elapsedTime = duration_cast<milliseconds>(stop - start).count();
+    std::cout << "\nDone! Finished in " << formatTime(elapsedTime) << "\n";
 }
 
 Ray Renderer::getRay(const Camera &camera, const glm::vec2 &point) const
