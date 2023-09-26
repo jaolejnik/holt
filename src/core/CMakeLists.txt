@@ -8,6 +8,8 @@ target_sources(
         [[color.h]]
         [[bitmap.h]]
         [[camera.h]]
+        [[rect.h]]
+        [[tileQueue.h]]
         [[renderer.h]]
         [[ray.h]]
         [[hittable.h]]
