@@ -26,13 +26,14 @@ target_sources(
         # SOURCES
         [[bitmap.cpp]]
         [[camera.cpp]]
+		[[tileQueue.cpp]]
         [[renderer.cpp]]
         [[sphere.cpp]]
         [[utils.cpp]]
         [[materials/diffuse.cpp]]
         [[materials/metal.cpp]]
         [[materials/clear.cpp]]
-)
+ )
 
 target_include_directories(
     holt_core

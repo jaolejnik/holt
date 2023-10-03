@@ -44,15 +44,14 @@ void Renderer::render(const Camera &camera, const Hittable &world)
     auto start = high_resolution_clock::now();
 
     auto renderTile = [this](const Camera &camera, const Hittable &world) {
-        while (!tiles.isEmpty())
+        while (auto tile = tiles.pop())
         {
-            Rect tile = tiles.pop();
-            int maxX  = tile.x + tile.width;
-            int maxY  = tile.y + tile.height;
+            int maxX = tile->x + tile->width;
+            int maxY = tile->y + tile->height;
 
-            for (int y = tile.y; y < maxY; ++y)
+            for (int y = tile->y; y < maxY; ++y)
             {
-                for (int x = tile.x; x < maxX; ++x)
+                for (int x = tile->x; x < maxX; ++x)
                 {
                     Color color(0.0f);
                     auto pixelCoords = glm::vec2(x, y);

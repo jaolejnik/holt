@@ -6,8 +6,6 @@
 #include "core/utils.h"
 
 #include <glm/vec3.hpp>
-#include <iostream>
-#include <memory>
 
 int main()
 {
