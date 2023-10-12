@@ -16,9 +16,10 @@ using std::chrono::seconds;
 namespace holt
 {
 
-Renderer::Renderer(const glm::vec2 &resolution) : frame(resolution), availableCores(std::thread::hardware_concurrency())
+Renderer::Renderer(const glm::vec2 &resolution)
+    : mFrame(resolution), mAvailableCores(std::thread::hardware_concurrency())
 {
-    tiles.init(resolution, tileResolution);
+    mTiles.init(resolution, mTileResolution);
 }
 
 const Color Renderer::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
@@ -28,7 +29,7 @@ const Color Renderer::traceRay(const holt::Ray &ray, const holt::Hittable &world
 
     HitRecord hitRecord;
     if (!world.hit(ray, holt::Interval(0.001f, holt::infinity), hitRecord))
-        return background;
+        return mBackground;
 
     Ray scatteredRay;
     Color attenuation;
@@ -44,7 +45,7 @@ void Renderer::render(const Camera &camera, const Hittable &world)
     auto start = high_resolution_clock::now();
 
     auto renderTile = [this](const Camera &camera, const Hittable &world) {
-        while (auto tile = tiles.pop())
+        while (auto tile = mTiles.pop())
         {
             int maxX = tile->x + tile->width;
             int maxY = tile->y + tile->height;
@@ -62,7 +63,7 @@ void Renderer::render(const Camera &camera, const Hittable &world)
                         {
                             auto dv = (glm::vec2(i, j) + randomVec2()) / static_cast<float>(samplingRate);
 
-                            auto p  = (pixelCoords + dv) / frame.resolution() - 0.5f;
+                            auto p  = (pixelCoords + dv) / mFrame.resolution() - 0.5f;
                             Ray ray = getRay(camera, p);
                             color += traceRay(ray, world, maxDepth);
                         }
@@ -72,7 +73,7 @@ void Renderer::render(const Camera &camera, const Hittable &world)
                     color = glm::clamp(color, 0.0f, 1.0f);
                     color = glm::sqrt(color);
 
-                    frame.setPixel(x, frame.height - 1 - y, color);
+                    mFrame.setPixel(x, mFrame.height - 1 - y, color);
                 }
             }
         }
@@ -80,7 +81,7 @@ void Renderer::render(const Camera &camera, const Hittable &world)
 
     std::vector<std::thread> workers;
 
-    for (int i = 0; i < availableCores; ++i)
+    for (int i = 0; i < mAvailableCores; ++i)
         workers.emplace_back(renderTile, std::cref(camera), std::cref(world));
 
     for (auto &worker : workers)
@@ -93,7 +94,7 @@ void Renderer::render(const Camera &camera, const Hittable &world)
 
 Ray Renderer::getRay(const Camera &camera, const glm::vec2 &point) const
 {
-    auto defocusJitter = randomVec2InUnitCircle() * camera.defocusStrength / frame.widthF();
+    auto defocusJitter = randomVec2InUnitCircle() * camera.defocusStrength / mFrame.widthF();
     auto pointLocal    = glm::vec3(point, 1.0f) * camera.getClipPlaneParams();
     auto rayOrigin     = camera.position + defocusJitter.x * camera.getRight() + defocusJitter.y * camera.getUp();
     auto rayTarget     = camera.position + pointLocal.x * camera.getRight() + pointLocal.y * camera.getUp() +

@@ -12,8 +12,8 @@ namespace holt
 class TileQueue
 {
   private:
-    std::queue<Rect> tiles;
-    std::mutex lock;
+    std::queue<Rect> mTiles;
+    std::mutex mLock;
 
   public:
     void init(const glm::ivec2 &frameResolution, const glm::ivec2 &tileResolution);

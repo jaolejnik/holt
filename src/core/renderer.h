@@ -19,11 +19,11 @@ class Renderer
     int maxDepth     = 10;
 
   private:
-    Color background                = Colors::BLACK;
-    const glm::ivec2 tileResolution = glm::vec2(32, 32);
-    const int availableCores;
-    TileQueue tiles;
-    Bitmap frame;
+    Color mBackground                = Colors::BLACK;
+    const glm::ivec2 mTileResolution = glm::vec2(32, 32);
+    const int mAvailableCores;
+    TileQueue mTiles;
+    Bitmap mFrame;
 
   public:
     Renderer(const glm::vec2 &resolution);
@@ -31,8 +31,8 @@ class Renderer
     const Color traceRay(const Ray &ray, const Hittable &world, int depth) const;
     void render(const Camera &camera, const Hittable &world);
 
-    const float frameAspectRatio() const { return frame.aspectRatio(); }
-    void saveFrame(const std::string &outPath) const { frame.save(outPath); }
+    const float frameAspectRatio() const { return mFrame.aspectRatio(); }
+    void saveFrame(const std::string &outPath) const { mFrame.save(outPath); }
 
   private:
     Ray getRay(const Camera &camera, const glm::vec2 &point) const;

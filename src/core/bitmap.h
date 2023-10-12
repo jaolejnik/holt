@@ -16,7 +16,7 @@ class Bitmap
     const size_t height;
 
   private:
-    std::vector<Pixel> pixels;
+    std::vector<Pixel> mPixels;
 
   public:
     Bitmap(glm::vec2 resolution, const Color &color = Colors::BLACK);
