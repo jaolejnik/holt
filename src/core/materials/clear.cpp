@@ -7,12 +7,12 @@
 namespace holt
 {
 
-bool Clear::scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenuation, Ray &scatteredRay) const
+bool Clear::scatter(Ray &ray, const HitRecord &hitRecord, Color &attenuation) const
 {
     attenuation           = Color(1.0f);
     float refractionRatio = hitRecord.frontFace ? 1.0f / mRefractionIndex : mRefractionIndex;
 
-    auto unitDirection = glm::normalize(inRay.direction);
+    auto unitDirection = glm::normalize(ray.direction);
     float cosTheta     = glm::min(glm::dot(-unitDirection, hitRecord.normal), 1.0f);
     float sinTheta     = glm::sqrt(1.0f - cosTheta * cosTheta);
 
@@ -21,7 +21,8 @@ bool Clear::scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenua
                              ? glm::reflect(unitDirection, hitRecord.normal)
                              : glm::refract(unitDirection, hitRecord.normal, refractionRatio);
 
-    scatteredRay = Ray(hitRecord.point, direction);
+    ray.origin    = hitRecord.point;
+    ray.direction = direction;
 
     return true;
 }

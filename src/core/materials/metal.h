@@ -15,7 +15,7 @@ class Metal : public Material
   public:
     Metal(const Color &albedo, float fuzz) : mAlbedo(albedo), mFuzz(fuzz < 1.0f ? fuzz : 1.0f) {}
 
-    bool scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenuation, Ray &scatteredRay) const override;
+    bool scatter(Ray &ray, const HitRecord &hitRecord, Color &attenuation) const override;
 };
 
 } // namespace holt

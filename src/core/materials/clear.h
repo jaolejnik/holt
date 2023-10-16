@@ -15,7 +15,7 @@ class Clear : public Material
   public:
     Clear(float refractionIndex) : mRefractionIndex(refractionIndex) {}
 
-    bool scatter(const Ray &inRay, const HitRecord &hitRecord, Color &attenuation, Ray &scatteredRay) const override;
+    bool scatter(Ray &ray, const HitRecord &hitRecord, Color &attenuation) const override;
 };
 
 } // namespace holt

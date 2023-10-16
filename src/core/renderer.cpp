@@ -22,22 +22,31 @@ Renderer::Renderer(const glm::vec2 &resolution)
     mTiles.init(resolution, mTileResolution);
 }
 
-const Color Renderer::traceRay(const holt::Ray &ray, const holt::Hittable &world, int depth) const
+const Color Renderer::traceRay(holt::Ray &ray, const holt::Hittable &world, int maxBounce) const
 {
-    if (depth <= 0)
-        return Color(0.0f);
-
     HitRecord hitRecord;
-    if (!world.hit(ray, holt::Interval(0.001f, holt::infinity), hitRecord))
-        return mBackground;
-
-    Ray scatteredRay;
     Color attenuation;
-    Color emmittedLight = hitRecord.material->emit();
-    if (!hitRecord.material->scatter(ray, hitRecord, attenuation, scatteredRay))
-        return emmittedLight;
+    Color incomingLight = Color(0.0f);
+    Color rayColor      = Color(1.0f);
 
-    return emmittedLight + attenuation * traceRay(scatteredRay, world, depth - 1);
+    for (int bounce = 0; bounce < maxBounce; ++bounce)
+    {
+        if (!world.hit(ray, Interval(0.001f, infinity), hitRecord))
+        {
+            incomingLight += rayColor * mBackground;
+            break;
+        }
+
+        if (!hitRecord.material->scatter(ray, hitRecord, attenuation))
+        {
+            incomingLight += rayColor * hitRecord.material->emit();
+            break;
+        }
+
+        rayColor *= attenuation;
+    }
+
+    return incomingLight;
 }
 
 void Renderer::render(const Camera &camera, const Hittable &world)

@@ -28,7 +28,7 @@ class Renderer
   public:
     Renderer(const glm::vec2 &resolution);
 
-    const Color traceRay(const Ray &ray, const Hittable &world, int depth) const;
+    const Color traceRay(Ray &ray, const Hittable &world, int depth) const;
     void render(const Camera &camera, const Hittable &world);
 
     const float frameAspectRatio() const { return mFrame.aspectRatio(); }
